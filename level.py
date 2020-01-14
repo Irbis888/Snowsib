@@ -63,11 +63,11 @@ class Level:
 
     def gameover(self):
         self.run = False
+        self.master.guess = 11
 
     def endlevel(self):
         self.run = False
-        self.master.time = self.player.time
-        if self.master.guess + 1 < len(self.master.levels):
+        if self.master.guess + 2 < len(self.master.levels):
             self.master.guess += 1
         else:
             self.master.guess = 0

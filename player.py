@@ -24,13 +24,15 @@ class Player:
         self.sprite.add(self.master.gplayer)
         self.sprite.rect.x = x
         self.sprite.rect.y = y
+        self.pause = 0
 
     def render(self):
         self.vx = 0
         self.vy = 0
         d = self.dir
-        if pygame.key.get_pressed()[112] == 1:
+        if pygame.key.get_pressed()[112] == 1 and self.pause == 0:
             self.master.run = not self.master.run
+        self.pause = pygame.key.get_pressed()[112]
         if pygame.key.get_pressed()[275] == 1:
             self.vx = self.speed
             self.dir = 0
@@ -50,6 +52,7 @@ class Player:
             self.sprite.rect.y += self.vy
             self.fx += self.vx
             self.fy += self.vy
+            self.time -= 0.02
         if pygame.sprite.spritecollideany(self.sprite, self.master.gw):
             self.sprite.rect.x -= self.vx
             self.sprite.rect.y -= self.vy
@@ -87,12 +90,12 @@ class Player:
             self.fy = 0
         if pygame.sprite.spritecollide(self.sprite, self.master.gs, False):
             self.score += len(pygame.sprite.spritecollide(self.sprite, self.master.gs, True))
-        self.time -= 0.02
+
         if self.time <= 0 or self.hp <= 0:
             self.master.gameover()
         if self.score == self.master.sc + 3 * len(self.master.slist):
             self.master.endlevel()
-        if pygame.key.get_pressed()[32] == 1:
+        if pygame.key.get_pressed()[32] == 1 and self.master.run:
             if time.time() - self.shtime >= 0.5:
                 self.shoot()
                 self.shtime = time.time()
