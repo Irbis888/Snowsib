@@ -83,7 +83,7 @@ snowlist5 = [(j, i) for i in range(0, 21) for j in range(0, 15)]
 
 class Game:
     def __init__(self):
-        self.guess = 0
+        self.guess = 2
         self.end = False
         self.time = 0
         player = (0, 11 * 50, 36)
